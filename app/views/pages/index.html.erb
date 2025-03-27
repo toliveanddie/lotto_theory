@@ -1,0 +1,45 @@
+<% output = match6 %>
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: black;
+  }
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    color: white;
+    font-size: 32px; /* Adjusted to twice the typical font size */
+  }
+  th {
+    background-color: #333333;
+  }
+  p {
+    color: white;
+  }
+</style>
+
+<h1> match 6 </h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th>Numbers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% output[0].each_with_index do |numbers, index| %>
+      <tr>
+        <td>Position <%= index + 1 %>:</td>
+        <td><%= numbers.map(&:to_i).uniq.sort.join(', ') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>PICKS: <%= output[1].join(', ') %></h2>
+
+<h2>average - 7-14-21-28-35-42 </h2>
