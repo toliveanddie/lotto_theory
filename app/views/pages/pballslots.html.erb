@@ -1,0 +1,59 @@
+<style>
+  table {
+    border-collapse: collapse;
+    margin: 20px auto;
+    background-color: #222; /* Dark table background */
+    color: #fff; /* Light text for contrast */
+    width: 100%; /* Full width table */
+    text-align: center; /* Center align text */
+  }
+  th, td {
+    padding: 10px;
+    border: 1px solid #444; /* Slightly lighter border */
+  }
+  th {
+    background-color: #444; /* Header background */
+    color: #e2e2e2; /* Light header text */
+    font-weight: bold;
+  }
+  td {
+    background-color: #333; /* Cell background */
+    color: #ddd; /* Light cell text */
+  }
+  tr:hover td {
+    background-color: #555; /* Row hover effect */
+    color: #fff; /* Brighten text on hover */
+  }
+</style>
+
+
+
+<h1>Powerball Data</h1>
+<table border="1" style="width: 100%; text-align: center;">
+  <thead>
+    <tr>
+      <% @picked_slots.keys.each do |slot| %>
+        <th>Slot <%= slot %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% max_rows = @picked_slots.values.map(&:length).max %> <!-- Get the largest column -->
+    <% (1..max_rows).each do |row| %>
+      <tr>
+        <% @picked_slots.each do |_slot, numbers| %>
+          <td>
+            <% number, draw_index = numbers.to_a[row - 1] %>
+            <% if number %>
+              <span style="color: yellow;"> <%= number %></span>: 
+              <span style="color: white;"><%= draw_index %></span>
+            <% else %>
+              &nbsp; <!-- Empty cell -->
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
