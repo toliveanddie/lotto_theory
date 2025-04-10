@@ -228,6 +228,52 @@ module PagesHelper
     picked_slots
   end #powerslots method
 
+	def fetch_lottery_data(url)
+    results = []
+    picked = Hash.new(0)
+
+    # Fetch and parse the HTML document
+    doc = Nokogiri::HTML(URI.open(url))
+    doc.css('td li').each do |data|
+      d = data.content.strip
+      results.push(d.to_i) if d.to_i != 0
+    end
+
+    # Organize results into draws
+    draws = []
+    (results.length / 6).times do
+      draws.push(results.shift(6))
+    end
+
+    # Track draw-back value for each number
+    count = draws.size - 1 # Start with the last draw
+    draws.reverse.each do |draw|
+      draw.each do |number|
+        picked[number] = count
+      end
+      count -= 1
+    end
+
+    # Define ranges
+    ranges = [
+      (1..5),
+      (6..15),
+      (16..25),
+      (26..35),
+      (36..44),
+      (45..49)
+    ]
+
+    # Organize draw-back data into ranges and sort by draw-back value
+    range_data = ranges.map do |range|
+      range.each_with_object({}) do |num, hash|
+        hash[num] = picked[num] if picked.key?(num)
+      end.sort_by { |_, draw_back| -draw_back }.to_h # Sort by draw-back descending
+    end
+
+    range_data
+  end
+
 end #module
 
 

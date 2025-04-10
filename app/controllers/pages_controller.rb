@@ -14,4 +14,7 @@ class PagesController < ApplicationController
 	def pballslots
 		@picked_slots = fetch_powerball_data
 	end
+
+	def m6back
+	end
 end

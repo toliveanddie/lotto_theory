@@ -1,0 +1,21 @@
+<table style="width: 100%; border-collapse: collapse; background-color: black; color: white; text-align: center;">
+  <thead>
+    <tr>
+      <% ranges = [(1..5), (6..15), (16..25), (26..35), (36..44), (45..49)] %>
+      <% ranges.each do |range| %>
+        <th style="border: 1px solid white; padding: 10px;"><%= range.to_s %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <% fetch_lottery_data('https://www.lottery.net/pennsylvania/match-6-lotto/numbers/2025').each do |range_data| %>
+        <td style="border: 1px solid white; padding: 10px; vertical-align: top;">
+          <% range_data.each do |num, draw_back| %>
+            <p><%= "#{num}: #{draw_back}" %></p>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
